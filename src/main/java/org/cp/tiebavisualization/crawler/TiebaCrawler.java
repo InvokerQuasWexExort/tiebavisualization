@@ -38,10 +38,18 @@ public class TiebaCrawler {
         if (!StringUtils.isEmpty(html)) {
             Document document = Jsoup.parse(html);
             try {
-                Elements elements = document.select("div#pagelet_frs-list/pagelet/thread_list ul");
+                Elements elements = document.select("div[id=pagelet_frs-list/pagelet/thread_list] ul#thread_list li.j_thread_list.clearfix");
                 if (elements != null && elements.size() > 0) {
-                    Element element = elements.get(i);
+                    System.out.println(elements.size());
+                    for (int i = 0; i < elements.size(); i++) {
+                        Element element = elements.get(i);
+                        String field = element.attr("data-field");
+                        System.out.println(field);
+                        System.out.println("----------------------->");
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
