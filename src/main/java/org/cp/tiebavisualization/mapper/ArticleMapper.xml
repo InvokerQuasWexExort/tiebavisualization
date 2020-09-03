@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cp.tiebavisualization.mapper.ArticleMapper">
+    <select id="findByTid" resultType="org.cp.tiebavisualization.pojo.Article">
+        select * from t_article where tid=#{tid} limit 0,1;
+    </select>
+
+    <insert id="insertBatch">
+        insert into t_article
+        (`tid`, `user_id`, `author_name`, `author_nickname`,
+        `title`, `url`, `user_url`, `reply_num`, `create_time`, `is_top`)
+        values
+        <foreach collection ="list" item="article" separator =",">
+            (#{article.tid}, #{article.userId}, #{article.authorName}, #{article.authorNickname}, #{article.title},
+            #{article.url}, #{article.userUrl}, #{article.replyNum}, #{article.createTime}, #{article.isTop})
+        </foreach >
+    </insert>
+</mapper>

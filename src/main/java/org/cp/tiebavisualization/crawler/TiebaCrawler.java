@@ -2,6 +2,8 @@ package org.cp.tiebavisualization.crawler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.session.SqlSession;
+import org.cp.tiebavisualization.mapper.ArticleMapper;
 import org.cp.tiebavisualization.pojo.Article;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.util.Optional;
 
 /**
  * @ClassName TiebaCrawler
@@ -28,6 +32,9 @@ public class TiebaCrawler {
 
     @Autowired
     private PhantomJsTemplate template;
+
+    @Autowired
+    private ArticleMapper articleMapper;
 
     /**
      * @param * @param url
@@ -97,7 +104,9 @@ public class TiebaCrawler {
                         if (!StringUtils.isEmpty(userHref)) {
                             article.setUserUrl(prefix + userHref);
                         }
-                        System.out.println(article);
+                        Optional<Article> opt = Optional.ofNullable(articleMapper.findByTid(article.getTid()));
+
+//                        opt.ifPresent(a->articleMapper.insertBatch(a));
                     }
                 }
             } catch (Exception e) {
