@@ -1,5 +1,8 @@
 package org.cp.tiebavisualization.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
 /**
@@ -8,8 +11,10 @@ import java.util.Date;
  * @Author chenpeng
  * @Date 2020/9/2 19:30
  */
+@TableName(value = "t_article")
 public class Article {
 
+    @TableId
     private int id;
     private long tid;
     private long userId;

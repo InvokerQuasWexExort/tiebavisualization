@@ -2,7 +2,6 @@ package org.cp.tiebavisualization.crawler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.ibatis.session.SqlSession;
 import org.cp.tiebavisualization.mapper.ArticleMapper;
 import org.cp.tiebavisualization.pojo.Article;
 import org.jsoup.Jsoup;
@@ -105,8 +104,9 @@ public class TiebaCrawler {
                             article.setUserUrl(prefix + userHref);
                         }
                         Optional<Article> opt = Optional.ofNullable(articleMapper.findByTid(article.getTid()));
-
-//                        opt.ifPresent(a->articleMapper.insertBatch(a));
+                        if (!opt.isPresent())
+                            System.out.println(article);
+                            articleMapper.insert(article);
                     }
                 }
             } catch (Exception e) {
